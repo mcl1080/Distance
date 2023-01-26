@@ -52,6 +52,7 @@ def distance_between_polar_points(r1, theta1, r2, theta2):
     return distance
 
 
+print("Input Decimal Coordinates in this format 37.233, -115.812. Decimal Degrees separated by comma space.")
 while True:
     lat_1, lon_1 = list(map(float, input("Coordinates 1: ").split(", ")))
     lat_2, lon_2 = list(map(float, input("Coordinates 2: ").split(", ")))
