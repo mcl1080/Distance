@@ -1,6 +1,7 @@
 import math
 
 
+# This function takes the lat and lon in decimal format and calculates the distance between them on a sphere
 def distance_between_points(lat1, lon1, lat2, lon2):
     # Convert latitude and longitude to radians
     lat1 = math.radians(lat1)
@@ -15,8 +16,8 @@ def distance_between_points(lat1, lon1, lat2, lon2):
     d_lon = lon2 - lon1
     d_lat = lat2 - lat1
     a = (
-        math.sin(d_lat / 2) ** 2
-        + math.cos(lat1) * math.cos(lat2) * math.sin(d_lon / 2) ** 2
+            math.sin(d_lat / 2) ** 2
+            + math.cos(lat1) * math.cos(lat2) * math.sin(d_lon / 2) ** 2
     )
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     distance = r * c
@@ -24,6 +25,7 @@ def distance_between_points(lat1, lon1, lat2, lon2):
     return distance
 
 
+# This function converts latitude to the number of degrees from the North Pole
 def convert_latitude(latitude):
     if latitude >= 0:
         return 90 - latitude
@@ -31,14 +33,13 @@ def convert_latitude(latitude):
         return abs(latitude) + 90
 
 
+# This Function takes the lat and lon, converts the lat to a distance from the North Pole, and the lon as the angle.
+# Then uses those distances and angles as polar coordinates which are converted to cartesian coordinates and the
+# distance is calculated using the pythagorean theorem.
 def distance_between_polar_points(r1, theta1, r2, theta2):
     # Convert latitude
-    r1 = convert_latitude(r1)
-    r2 = convert_latitude(r2)
-
-    # Convert latitude degrees to miles
-    r1 = r1 * 69.09409442795118
-    r2 = r2 * 69.09409442795118
+    r1 = convert_latitude(r1) * 69.09409442795118
+    r2 = convert_latitude(r2) * 69.09409442795118
 
     # Convert polar coordinates to cartesian coordinates
     x1 = r1 * math.cos(math.radians(theta1))
