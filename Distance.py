@@ -1,14 +1,14 @@
-import math
+from math import sqrt, cos, sin, radians, atan2
 
 
 def distance_between_points(lat1, lon1, lat2, lon2):
     """This function takes the lat and lon in decimal format and calculates the distance between them on a sphere"""
 
     # Convert latitude and longitude to radians
-    lat1 = math.radians(lat1)
-    lon1 = math.radians(lon1)
-    lat2 = math.radians(lat2)
-    lon2 = math.radians(lon2)
+    lat1 = radians(lat1)
+    lon1 = radians(lon1)
+    lat2 = radians(lat2)
+    lon2 = radians(lon2)
 
     # The radius of Earth in miles
     r = 3958.755866
@@ -17,10 +17,10 @@ def distance_between_points(lat1, lon1, lat2, lon2):
     d_lon = lon2 - lon1
     d_lat = lat2 - lat1
     a = (
-            math.sin(d_lat / 2) ** 2
-            + math.cos(lat1) * math.cos(lat2) * math.sin(d_lon / 2) ** 2
+            sin(d_lat / 2) ** 2
+            + cos(lat1) * cos(lat2) * sin(d_lon / 2) ** 2
     )
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
     distance = r * c
 
     return distance
@@ -43,10 +43,10 @@ def distance_between_polar_points(r1, theta1, r2, theta2):
     r2 = convert_latitude(r2) * 69.09332414433953
 
     # Convert polar coordinates to cartesian coordinates
-    x1 = r1 * math.cos(math.radians(theta1))
-    y1 = r1 * math.sin(math.radians(theta1))
-    x2 = r2 * math.cos(math.radians(theta2))
-    y2 = r2 * math.sin(math.radians(theta2))
+    x1 = r1 * cos(radians(theta1))
+    y1 = r1 * sin(radians(theta1))
+    x2 = r2 * cos(radians(theta2))
+    y2 = r2 * sin(radians(theta2))
 
     # Distance formula to calculate distance
     distance = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
@@ -60,9 +60,9 @@ while True:
     lat_2, lon_2 = list(map(float, input("Coordinates 2: ").split(", ")))
 
     g_dist = distance_between_points(lat_1, lon_1, lat_2, lon_2)
-    print(f"Globe: {round(g_dist,3)} Miles")
+    print(f"Globe: {round(g_dist, 3)} Miles")
     f_dist = distance_between_polar_points(lat_1, lon_1, lat_2, lon_2)
-    print(f"Flat: {round(f_dist,3)} Miles")
+    print(f"Flat: {round(f_dist, 3)} Miles")
     dif = f_dist - g_dist
-    print(f"Difference: {round(dif,3)} Miles")
+    print(f"Difference: {round(dif, 3)} Miles")
     print(f"-------------------------------")
