@@ -1,8 +1,9 @@
 import math
 
 
-# This function takes the lat and lon in decimal format and calculates the distance between them on a sphere
 def distance_between_points(lat1, lon1, lat2, lon2):
+    """This function takes the lat and lon in decimal format and calculates the distance between them on a sphere"""
+
     # Convert latitude and longitude to radians
     lat1 = math.radians(lat1)
     lon1 = math.radians(lon1)
@@ -10,7 +11,7 @@ def distance_between_points(lat1, lon1, lat2, lon2):
     lon2 = math.radians(lon2)
 
     # The radius of Earth in miles
-    r = 3958.8
+    r = 3958.755866
 
     # Haversine formula to calculate distance
     d_lon = lon2 - lon1
@@ -25,21 +26,21 @@ def distance_between_points(lat1, lon1, lat2, lon2):
     return distance
 
 
-# This function converts latitude to the number of degrees from the North Pole
 def convert_latitude(latitude):
+    """This function converts latitude to the number of degrees from the North Pole"""
     if latitude >= 0:
         return 90 - latitude
     else:
         return abs(latitude) + 90
 
 
-# This Function takes the lat and lon, converts the lat to a distance from the North Pole, and the lon as the angle.
-# Then uses those distances and angles as polar coordinates which are converted to cartesian coordinates and the
-# distance is calculated using the pythagorean theorem.
 def distance_between_polar_points(r1, theta1, r2, theta2):
+    """ This Function takes the lat and lon, converts the lat to a distance from the North Pole, and the lon as the
+    angle. Then uses those distances and angles as polar coordinates which are converted to cartesian coordinates and
+    the distance is calculated using the pythagorean theorem."""
     # Convert latitude
-    r1 = convert_latitude(r1) * 69.09409442795118
-    r2 = convert_latitude(r2) * 69.09409442795118
+    r1 = convert_latitude(r1) * 69.09332414433953
+    r2 = convert_latitude(r2) * 69.09332414433953
 
     # Convert polar coordinates to cartesian coordinates
     x1 = r1 * math.cos(math.radians(theta1))
@@ -58,10 +59,10 @@ while True:
     lat_1, lon_1 = list(map(float, input("Coordinates 1: ").split(", ")))
     lat_2, lon_2 = list(map(float, input("Coordinates 2: ").split(", ")))
 
-    g_dist = round(distance_between_points(lat_1, lon_1, lat_2, lon_2), 3)
-    print(f"Globe: {g_dist} Miles")
-    f_dist = round(distance_between_polar_points(lat_1, lon_1, lat_2, lon_2), 3)
-    print(f"Flat: {f_dist} Miles")
-    dif = round(f_dist - g_dist, 3)
-    print(f"Difference: {dif} Miles")
+    g_dist = distance_between_points(lat_1, lon_1, lat_2, lon_2)
+    print(f"Globe: {round(g_dist,3)} Miles")
+    f_dist = distance_between_polar_points(lat_1, lon_1, lat_2, lon_2)
+    print(f"Flat: {round(f_dist,3)} Miles")
+    dif = f_dist - g_dist
+    print(f"Difference: {round(dif,3)} Miles")
     print(f"-------------------------------")
