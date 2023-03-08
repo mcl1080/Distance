@@ -53,6 +53,10 @@ def distance_between_polar_points(r1, theta1, r2, theta2):
 
     return distance
 
+def planar_survey(lat1, lon1, lat2, lon2):
+    distance = (((lat2 - lat1) ** 2 + (lon2 - lon1) ** 2) ** 0.5) * 69.046767
+
+    return distance
 
 def parse_coordinate(coordinate):
     # split the input string into direction and values
@@ -114,5 +118,11 @@ while True:
         print(f"Difference: {round(dif * 5280, 1):,} Feet")
     else:
         print(f"Difference: {round(dif, 3):,} Miles")
+    p_dist = planar_survey(lat_1, lon_1, lat_2, lon_2)
+    if p_dist < 1:
+        print(f"Planar: {round(p_dist * 5280, 1):,} Feet")
+    else:
+        print(f"Planar: {round(p_dist, 3):,} Miles")
+
     print(f"-------------------------------")
 
