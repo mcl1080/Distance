@@ -100,9 +100,19 @@ while True:
     lon_2 = parse_coordinate(lon_2)
 
     g_dist = distance_between_points(lat_1, lon_1, lat_2, lon_2)
-    print(f"Globe: {round(g_dist, 3):,} Miles")
+    if g_dist < 1:
+        print(f"Globe: {round(g_dist*5280, 1):,} Feet")
+    else:
+        print(f"Globe: {round(g_dist, 3):,} Miles")
     f_dist = distance_between_polar_points(lat_1, lon_1, lat_2, lon_2)
-    print(f"Flat: {round(f_dist, 3):,} Miles")
+    if f_dist < 1:
+        print(f"Flat: {round(f_dist * 5280, 1):,} Feet")
+    else:
+        print(f"Flat: {round(f_dist, 3):,} Miles")
     dif = f_dist - g_dist
-    print(f"Difference: {round(dif, 3):,} Miles")
+    if dif < 1:
+        print(f"Difference: {round(dif * 5280, 1):,} Feet")
+    else:
+        print(f"Difference: {round(dif, 3):,} Miles")
     print(f"-------------------------------")
+
