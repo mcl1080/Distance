@@ -53,12 +53,22 @@ def distance_between_polar_points(r1, theta1, r2, theta2):
 
     return distance
 
+
 def planar_survey(lat1, lon1, lat2, lon2):
     distance = (((lat2 - lat1) ** 2 + (lon2 - lon1) ** 2) ** 0.5) * 69.046767
 
     return distance
 
+
 def parse_coordinate(coordinate):
+    # convert the input to a string
+    coordinate = str(coordinate)
+    # check for negative input values
+    is_negative = False
+    if coordinate.startswith("-"):
+        is_negative = True
+        coordinate = coordinate[1:]
+
     # split the input string into direction and values
     parts = coordinate.upper().split()
     if parts[0] in ["N", "S", "W", "E"]:
@@ -73,23 +83,24 @@ def parse_coordinate(coordinate):
         minutes = int(values[-2])
         seconds = float(values[-1])
         decimal_minutes = minutes / 60 + seconds / 3600
-        decimal_degrees = abs(int(values[0])) + decimal_minutes
+        decimal_degrees = (int(values[0])) + decimal_minutes
     elif len(values) == 2:
         # degrees-decimal minutes format
         minutes = float(values[-1])
         decimal_minutes = minutes / 60
-        decimal_degrees = abs(int(values[0])) + decimal_minutes
+        decimal_degrees = (int(values[0])) + decimal_minutes
     else:
         # decimal degrees format
         decimal_degrees = float(values[0])
 
     # determine the sign based on the direction or negative values
     sign = 1
-    if direction in ["S", "W"] or values[0][0] == "-":
+    if direction in ["S", "W"] or is_negative:
         sign = -1
 
     # return the decimal degrees with the correct sign
     return sign * decimal_degrees
+
 
 
 print("Input Coordinates in any of these formats DMS, DDM, or DD. You can use N,E,S,W or negative signs.")
@@ -125,4 +136,3 @@ while True:
         print(f"Planar: {round(p_dist, 3):,} Miles")
 
     print(f"-------------------------------")
-
